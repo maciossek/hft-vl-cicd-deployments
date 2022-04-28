@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+
+  <title>HFT IPR CI/CD & Deployments</title>
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+<script defer src="main.js"></script></head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-background-image="https://media.giphy.com/media/H4buZ6PLgwsKjA9hlO/giphy.gif">
+        <h1 class="title">IPR</h1>
+        <h3 class="title">CI/CD & Deployments</h3>
+      </section>
+
+      <!-- Begriffe -->
+      <section>
+        <section data-auto-animate data-background-size="cover"
+          data-background-image="https://media.giphy.com/media/cItQNjtLFq4fti3hzJ/giphy.gif">
+          <h3 class="title">Begriffe</h3>
+        </section>
+        <section data-auto-animate>
+          <h3>continuous integration (CI)</h3>
+          <p>Unter kontinuierlicher Integration (Continuous Integration, CI) versteht man die Automatisierung
+            der Integration von Codeänderungen mehrerer Beteiligter in ein einziges Softwareprojekt. Automatisierte
+            Tools werden
+            eingesetzt, um die Korrektheit des neuen Codes vor der Integration zu überprüfen. Ein Versionskontrollsystem
+            für den Quellcode ist das Herzstück des CI-Prozesses.
+          </p>
+        </section>
+        <section data-auto-animate>
+          <h3>continuous integration Anbieter</h3>
+          <ul>
+            <li>Azure Pipelines</li>
+            <li>Bitbucket</li>
+            <li>GitLab</li>
+            <li>GitHub Actions</li>
+            <li>CircleCI</li>
+            <li>TravisCI</li>
+            <li>Concourse (self hosted)</li>
+          </ul>
+        </section>
+        <section data-auto-animate>
+          <h3>Trunk Based Development</h3>
+          <ul>
+            <li>Single Source of Truth</li>
+            <li>Kurzlebige branches</li>
+            <li>Einfache Code Integration</li>
+            <li>Feature Flags</li>
+          </ul>
+        </section>
+        <section data-auto-animate>
+          <h3>Gitflow</h3>
+          <ul>
+            <li>Eigene Branches für Hotfix, Releases, Features</li>
+            <li>Branches sind eher länger offen</li>
+            <li>Workflow ist eher strikt</li>
+            <li>Passt bei Open Source Projekten tendenziell besser</li>
+          </ul>
+        </section>
+        <section data-auto-animate>
+          <img
+            src="https://wac-cdn.atlassian.com/dam/jcr:a13c18d6-94f3-4fc4-84fb-2b8f1b2fd339/01%20How%20it%20works.svg?cdnVersion=314"
+            alt="">
+        </section>
+        <section data-auto-animate>
+          <img
+            src="https://wac-cdn.atlassian.com/dam/jcr:34c86360-8dea-4be4-92f7-6597d4d5bfae/02%20Feature%20branches.svg?cdnVersion=314"
+            alt="">
+        </section>
+        <section data-auto-animate>
+          <img
+            src="https://wac-cdn.atlassian.com/dam/jcr:cc0b526e-adb7-4d45-874e-9bcea9898b4a/04%20Hotfix%20branches.svg?cdnVersion=314"
+            alt="">
+        </section>
+        <section data-auto-animate>
+          <h3>continuous delivery (cd)</h3>
+          <p>Unter kontinuierlicher Bereitstellung (Continuous Delivery, CD) versteht man die Automatisierung
+            eines Release Prozesses. Der maximale Aufwand soll hier bei einem Button Klick liegen. In der Theorie kann
+            monatlich, wöchentlich oder sogar stündlich eine neue Software Version zur Verfügung gestellt werden. Das
+            Ziel ist jedoch meistens so früh wie möglich kleine Chargen freizugeben, damit Probleme leichter zu beheben
+            sind.
+          </p>
+        </section>
+        <section data-auto-animate>
+          <img
+            src="https://wac-cdn.atlassian.com/dam/jcr:b2a6d1a7-1a60-4c77-aa30-f3eb675d6ad6/ci%20cd%20asset%20updates%20.007.png?cdnVersion=314"
+            alt="">
+        </section>
+        <section data-auto-animate>
+          <h3>Deployment</h3>
+          <p>Unter einem Deployment versteht man den tatsächlichen Release einer Software völlig losgelöst von
+            Code Versionierung oder Integrationssystemen. Es geht hier ausschließlich um das einmalige Ausliefern. Das
+            kann ein brennen auf eine CD oder das hochladen einer Binary für einen Application server sein.
+          </p>
+        </section>
+        <section data-auto-animate>
+          <h3>Deployment Strategien</h3>
+          <ul>
+            <li><strong>Recreate</strong>: Version A wird gestoppt, danach wird Version B gestartet</li>
+            <li><strong>Rolling</strong> Version B ersetzt nach und nach Version A</li>
+            <li><strong>Blue-Green</strong>: Version B wird parallel gestartet. Dann wird der Traffik von A auf B
+              umgeleitet.</li>
+          </ul>
+        </section>
+        <section data-auto-animate>
+          <h3>Deployment Strategien</h3>
+          <ul>
+            <li><strong>Canary</strong>: Version B wird nur an bestimmte Kunden ausgeliefert und danach an alle.</li>
+            <li><strong>A/B</strong>: Version B wird wird nur an bestimmte Kunden ausgeliefert unter Berücksichtigung
+              bestimmer Kriterien
+            </li>
+          </ul>
+        </section>
+      </section>
+
+      <!-- GitHub Actions -->
+      <section>
+        <section data-auto-animate data-background-size="cover"
+          data-background-image="https://media.giphy.com/media/rCQTCy4rvuxR6/giphy.gif">
+          <h3 class="title">Container based CI/CD</h3>
+          <small class="white">Mit GitHub Actions ❤️</small>
+        </section>
+        <section>
+          <h3>GitHub Actions Backend</h3>
+          <ol>
+            <li>
+              Heroku Account anlegen
+            </li>
+            <li>
+              Datenbank anlegen
+            </li>
+            <li>
+              Codecov einloggen und repository aktivieren
+            </li>
+            <li>
+              HEROKU_API_KEY setzen
+            </li>
+            <li>
+              CODECOV_TOKEN setzen
+            </li>
+            <li>
+              DB_HOST in Heroku setzen
+            </li>
+          </ol>
+        </section>
+        <section>
+          <h3>GitHub Actions Frontend</h3>
+          <ol>
+            <li>
+              Heroku Account anlegen
+            </li>
+            <li>
+              Codecov einloggen und repository aktivieren
+            </li>
+            <li>
+              HEROKU_API_KEY setzen
+            </li>
+            <li>
+              CODECOV_TOKEN setzen
+            </li>
+            <li>
+              REACT_APP_API_ENDPOINT in Heroku setzen
+            </li>
+          </ol>
+        </section>
+        <section data-auto-animate>
+          <h3>package.json</h3>
+          <pre><code class="json" data-trim data-noescape data-line-numbers><script type="text/template">
+            {
+              "jest": {
+                "coverageThreshold": {
+                  "global": {
+                    "branches": 75,
+                    "functions": 75,
+                    "lines": 75,
+                    "statements": 75
+                  }
+                },
+                "coverageReporters": [
+                  "cobertura",
+                  "json",
+                  "lcov",
+                  "text"
+                ]
+              }
+            }           
+          </script></code></pre>
+        </section>
+        <section data-auto-animate>
+          <h3>codecov.yml</h3>
+          <pre><code class="yaml" data-trim data-noescape data-line-numbers><script type="text/template">
+            coverage:
+              precision: 2
+              round: down
+              range: "75...100"
+              status:
+                patch:
+                  default:
+                    target: 0%
+                project:
+                  default:
+                    target: 75%
+          </script></code></pre>
+        </section>
+        <section data-auto-animate>
+          <h3>.github/workflows/deploy.yml</h3>
+          <small>Frontend</small>
+          <pre><code class="yaml" data-trim data-noescape data-line-numbers><script type="text/template">
+            name: Deploy
+
+            on:
+              push:
+                branches: [main]
+              pull_request:
+                branches: [main]
+            
+            jobs:
+              test-and-build:
+                name: Test and Build
+                runs-on: ubuntu-latest
+            
+                strategy:
+                  matrix:
+                    node-version: [17]
+            
+                steps:
+                  - uses: actions/checkout@v3
+                  - name: Use Node.js ${{ matrix.node-version }}
+                    uses: actions/setup-node@v3
+                    with:
+                      node-version: ${{ matrix.node-version }}
+                  - run: yarn install
+                  - run: yarn run test:ci
+                  - run: yarn run build
+                    env:
+                      REACT_APP_NODE_ENV: production
+                      REACT_APP_AWS_REGION: nope
+                      REACT_APP_AWS_USER_POOL_ID: nope
+                      REACT_APP_AWS_APP_CLIENT_ID: nope
+                      REACT_APP_COMMIT_HASH: ${{ github.sha }}
+                  - uses: codecov/codecov-action@v1
+                    with:
+                      token: ${{ secrets.CODECOV_TOKEN }}
+                      file: ./coverage/cobertura-coverage.xml
+                      flags: unittests # optional
+                      name: codecov-umbrella # optional
+            
+              deploy:
+                name: Deploy
+                runs-on: ubuntu-latest
+                needs: [test-and-build]
+                if: ${{ github.event_name == 'push' }}
+            
+                steps:
+                  - uses: actions/checkout@v3
+                  - uses: akhileshns/heroku-deploy@v3.12.12
+                    with:
+                      heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+                      heroku_app_name: "hft-crap-stories-react"
+                      heroku_email: "mathias.maciossek@gmail.com"
+                      buildpack: "https://github.com/mars/create-react-app-buildpack"
+          </script></code></pre>
+        </section>
+        <section data-auto-animate>
+          <h3>.github/workflows/deploy.yml</h3>
+          <small>Backend</small>
+          <pre><code class="yaml" data-trim data-noescape data-line-numbers><script type="text/template">
+            name: Deploy
+
+            on:
+              push:
+                branches: [main]
+              pull_request:
+                branches: [main]
+            
+            jobs:
+              test-and-build:
+                runs-on: ubuntu-latest
+            
+                strategy:
+                  matrix:
+                    node-version: [17]
+            
+                services:
+                  # Label used to access the service container
+                  postgres:
+                    # Docker Hub image
+                    image: postgres:14
+                    # Provide the password for postgres
+                    env:
+                      POSTGRES_PASSWORD: hft
+                      POSTGRES_USER: hft
+                      PGTZ: UTC
+                    # Set health checks to wait until postgres has started
+                    options: >-
+                      --health-cmd pg_isready
+                      --health-interval 10s
+                      --health-timeout 5s
+                      --health-retries 5
+                    ports:
+                      # Maps tcp port 5432 on service container to the host
+                      - 5432:5432
+            
+                steps:
+                  # Downloads a copy of the code in your repository before running CI tests
+                  - name: Check out repository code
+                    uses: actions/checkout@v2
+                  - name: Use Node.js ${{ matrix.node-version }}
+                    uses: actions/setup-node@v1
+                    with:
+                      node-version: ${{ matrix.node-version }}
+            
+                  # Performs a clean installation of all dependencies in the `package.json` file
+                  # For more information, see https://docs.npmjs.com/cli/ci.html
+                  - name: Install dependencies
+                    run: npm install
+                  - name: Run Database migrations
+                    run: npm run migrate
+                    env:
+                      DB_HOST: postgresql://hft:hft@localhost:5432/hft
+                      JWKS_URI: none-of-your-business
+                  - name: Run Tests
+                    run: npm run test:ci
+                    env:
+                      DB_HOST: postgresql://hft:hft@localhost:5432/hft
+                      JWKS_URI: none-of-your-business
+                  - name: Run Build
+                    run: npm run build
+                  - uses: codecov/codecov-action@v1
+                    with:
+                      token: ${{ secrets.CODECOV_TOKEN }}
+                      file: ./coverage/cobertura-coverage.xml
+                      flags: unittests # optional
+                      name: codecov-umbrella # optional
+            
+              deploy:
+                name: Deploy
+                runs-on: ubuntu-latest
+                needs: [test-and-build]
+                if: ${{ github.event_name == 'push' }}
+            
+                steps:
+                  - uses: actions/checkout@v3
+                  - uses: akhileshns/heroku-deploy@v3.12.12
+                    with:
+                      heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+                      heroku_app_name: "hft-crap-stories-node"
+                      heroku_email: "mathias.maciossek@gmail.com"
+          </script></code></pre>
+        </section>
+      </section>
+
+      <!-- Heroku -->
+      <section>
+        <section data-auto-animate data-background-size="cover"
+          data-background-image="https://media.giphy.com/media/5YiNunQI0Wg9Mpc6Ts/giphy.gif">
+          <h3 class="title">Source Code based App Hosting</h3>
+          <small class="white">Mit Heroku ❤️</small>
+        </section>
+        <section>
+          <h3>Alternativen</h3>
+          <ul>
+            <li><a href="https://pages.cloudflare.com/">Cloudflare Pages</a></li>
+            <li><a href="https://cloud.google.com/appengine/">Google App Engine</a></li>
+            <li><a href="https://aws.amazon.com/elasticbeanstalk/">AWS Elastic Beanstalk</a></li>
+            <li>uvm.</li>
+          </ul>
+        </section>
+        <section data-auto-animate>
+          <h3>Frontend Procfile</h3>
+          <pre><code class="bash" data-trim data-noescape data-line-numbers><script type="text/template">
+            web: bin/boot
+          </script></code></pre>
+        </section>
+        <section data-auto-animate>
+          <h3>Frontend static.json</h3>
+          <pre><code class="json" data-trim data-noescape data-line-numbers><script type="text/template">
+            {
+              "root": "build/",
+              "routes": {
+                "/**": "index.html"
+              },
+              "https_only": true,
+              "headers": {
+                "/**": {
+                  "Strict-Transport-Security": "max-age=31557600"
+                }
+              }
+            }
+          </script></code></pre>
+        </section>
+        <section data-auto-animate>
+          <h3>Backend Procfile</h3>
+          <pre><code class="bash" data-trim data-noescape data-line-numbers><script type="text/template">
+            web: node dist/index.js
+          </script></code></pre>
+        </section>
+        <section data-auto-animate>
+          <h3>Backend ENV Vars</h3>
+          <pre><code class="bash" data-trim data-noescape data-line-numbers><script type="text/template">
+            PGSSLMODE=no-verify
+            CORS_URLS=frontend-url
+          </script></code></pre>
+        </section>
+      </section>
+
+      <section>
+        <h3>Links</h3>
+        <ul>
+
+          <li>
+            <a href="https://github.com/maciossek/crap-stories-node/tree/feature/cicd">Backend Repo</a>
+          </li>
+          <li>
+            <a href="https://github.com/maciossek/crap-stories-react/tree/feature/cicd">Frontend Repo</a>
+          </li>
+          <li>
+            <a href="https://github.com/features/actions">GitHub Actions</a>
+          </li>
+          <li>
+            <a href="https://vercel.com/">Vercel</a>
+          </li>
+          <li>
+            <a href="https://www.heroku.com/">Heroku</a>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</body>
+
+</html>
